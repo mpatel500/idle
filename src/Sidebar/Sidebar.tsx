@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import Drawer from '@mui/material/Drawer';
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+
+import PartyTab from '../PartyTab';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -43,7 +44,7 @@ const Sidebar = () => {
         <Tab label='Placeholder' />
       </Tabs>
       <TabPanel value={value} index={1}>
-        Hello
+        <PartyTab />
       </TabPanel>
     </Box>
   )
