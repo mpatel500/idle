@@ -11,28 +11,15 @@ const PartyTab = () => {
       <Typography variant='h6'>Inventory</Typography>
       </Box>
       <Grid container justifyContent='center' spacing={2} sx={{width:200}}>
-        <Grid item>
-          <Box component='img' sx={{width: 50, height: 50}}/>
+        <Grid item xs={12} sx={{py:1}}>
+	  <Box component='img' sx={{width: 50, height: 50}}/>
         </Grid>
-        <Grid item>
+        <Grid item xs={12} sx={{py:1}}>
+          <Box component='img' sx={{width: 50, height: 50}} />
+          <Box component='img' sx={{width: 50, height: 50, px:2}} />
           <Box component='img' sx={{width: 50, height: 50}} />
         </Grid>
-        <Grid item> 
-          <Box component='img' sx={{width: 50, height: 50}} />
-        </Grid>
-        <Grid item>
-          <Box component='img' sx={{width: 50, height: 50}} />
-        </Grid>
-        <Grid item>
-          <Box component='img' sx={{width: 50, height: 50}} />
-        </Grid>
-        <Grid item>
-          <Box component='img' sx={{width: 50, height: 50}} />
-        </Grid>
-        <Grid item>
-          <Box component='img' sx={{width: 50, height: 50}} />
-        </Grid>
-        <Grid item>
+        <Grid item sx={{py:1}}>
           <Box component='img' sx={{width: 50, height: 50}} />
         </Grid>
         <Grid item>
