@@ -16,6 +16,7 @@ const TabPanel = ({children, index, value}: TabPanelProps) => (
   <div
     role='tabpanel'
     id={`tabpanel-${index}`}
+    style={{width: '100%'}}
   >
     {value === index && (
       <Box sx={{p: 3}}>
