@@ -1,16 +1,35 @@
 import React, { useState } from 'react';
 
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import { Droppable } from 'react-beautiful-dnd';
-import { Draggable } from 'react-beautiful-dnd';
 
 import EquippedArmour from '../EquippedArmour';
 
-const PartyTab = ({ items }: { items: number[] }) => {
+const PartyTab = () => {
+	const [partyMemberItems, setPartyMemberItems] = useState(
+    [0, 1, 2, 3, 4, 5, 6, 7, 8]
+  );
+	const [selectedIndex, setSelectedIndex] = useState(-1);
+
+	const handleItemChange = (value: number, index: number) => {
+    console.log(index, value, selectedIndex);
+		if (selectedIndex === -1) {
+			setSelectedIndex(index)
+		} 
+		else {
+			const newItems = [...partyMemberItems];
+			const temp = partyMemberItems[index];
+			newItems[index] = partyMemberItems[selectedIndex];
+			newItems[selectedIndex] = temp;
+			setPartyMemberItems(newItems);
+			setSelectedIndex(-1);
+		}
+  }
+
   return (
     <Box>
       <Grid container justifyContent={'center'}>
@@ -30,56 +49,41 @@ const PartyTab = ({ items }: { items: number[] }) => {
         </Grid>
         <Grid item xs={12} justifyContent='center'>
           <Typography variant='h6' sx={{py: 3}}>Inventory</Typography>
-					<InventoryRow id={1} items={items}/>
+					<InventoryRow
+						id={1}
+						items={partyMemberItems}
+						handleItemChange={handleItemChange}
+					/>
         </Grid>
       </Grid>
     </Box>
   );
 };
 
-const InventoryRow = ({ id, items }: { id: number, items: number[] }) => {
+type InventoryRowProps = {
+	id: number,
+	items: number[],
+	handleItemChange: (value: number, index: number) => void
+}
+
+const InventoryRow = ({ id, items, handleItemChange }: InventoryRowProps ) => {
 	return (
-		<Droppable droppableId={`grid-${id}`} direction="horizontal">
-			{(provided) => (
-				<Grid
-					container
-					spacing={2}
-					ref={provided.innerRef}
-					{...provided.droppableProps}
-					justifyContent='center'
-				>
-					{items.map((item, index) => (
-						<Draggable
-							key={item.toString()}
-							draggableId={item.toString()}
-							index={index}
-						>
-							{(provided, snapshot) => (
-								<Grid
-									item
-									xs={1}
-									ref={provided.innerRef}
-									{...provided.draggableProps}
-									{...provided.dragHandleProps}
-									style={{
-										background: snapshot.isDragging ? 'grey' : 'lightgrey',
-										...provided.draggableProps.style,
-									}}
-								>
-									<Box
-										component='img'
-										src={`https://placekitten.com/50/50?image=${item}`} 
-										alt={`item-${item.toString()}`}
-									/>
-								</Grid>
-							)}
-						</Draggable>
-					))}
-					{provided.placeholder}
+		<Grid container spacing={2} justifyContent='center'>
+			{items.map((item, index) => (
+				<Grid item xs={1} key={`grid-row-${id}-col-${index}`}>
+					<Button onClick={() => handleItemChange(item, index)}>
+						<Box
+							component='img'
+							src={`https://placekitten.com/50/50?image=${index}`} 
+							alt={`item-${item.toString()}`}
+						/>
+						{item}
+					</Button>
 				</Grid>
+				)
 			)}
-		</Droppable>
-	)
-};
+		</Grid>
+	);
+}
 
 export default PartyTab;
