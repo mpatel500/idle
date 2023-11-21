@@ -11,7 +11,7 @@ import EquippedArmour from '../EquippedArmour';
 
 const PartyTab = () => {
 	const [partyMemberItems, setPartyMemberItems] = useState(
-    [0, 1, 2, 3, 4, 5, 6, 7, 8]
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
   );
 	const [selectedIndex, setSelectedIndex] = useState(-1);
 
@@ -19,7 +19,7 @@ const PartyTab = () => {
     console.log(index, value, selectedIndex);
 		if (selectedIndex === -1) {
 			setSelectedIndex(index)
-		} 
+		}
 		else {
 			const newItems = [...partyMemberItems];
 			const temp = partyMemberItems[index];
@@ -68,21 +68,18 @@ type InventoryRowProps = {
 
 const InventoryRow = ({ id, items, handleItemChange }: InventoryRowProps ) => {
 	return (
-		<Grid container spacing={2} justifyContent='center'>
+		<Box sx={{ display: 'flex', flexWrap: 'wrap'}}>
 			{items.map((item, index) => (
-				<Grid item xs={1} key={`grid-row-${id}-col-${index}`}>
-					<Button onClick={() => handleItemChange(item, index)}>
-						<Box
-							component='img'
-							src={`https://placekitten.com/50/50?image=${index}`} 
-							alt={`item-${item.toString()}`}
-						/>
-						{item}
-					</Button>
-				</Grid>
+				<Button onClick={() => handleItemChange(item, index)}>
+					<Box
+						component='img'
+						src={`https://placekitten.com/100/100?image=${item}`} 
+						alt={`item-${item.toString()}`}
+					/>
+				</Button>
 				)
 			)}
-		</Grid>
+		</Box>
 	);
 }
 
