@@ -50,7 +50,6 @@ const PartyTab = () => {
         <Grid item xs={12} justifyContent='center'>
           <Typography variant='h6' sx={{py: 3}}>Inventory</Typography>
 					<InventoryRow
-						id={1}
 						items={partyMemberItems}
 						handleItemChange={handleItemChange}
 					/>
@@ -61,19 +60,18 @@ const PartyTab = () => {
 };
 
 type InventoryRowProps = {
-	id: number,
 	items: number[],
 	handleItemChange: (value: number, index: number) => void
 }
 
-const InventoryRow = ({ id, items, handleItemChange }: InventoryRowProps ) => {
+const InventoryRow = ({ items, handleItemChange }: InventoryRowProps ) => {
 	return (
 		<Box sx={{ display: 'flex', flexWrap: 'wrap'}}>
 			{items.map((item, index) => (
-				<Button onClick={() => handleItemChange(item, index)}>
+				<Button key={`inventory-item-${index}`} onClick={() => handleItemChange(item, index)}>
 					<Box
 						component='img'
-						src={`https://placekitten.com/100/100?image=${item}`} 
+						src={`https://placekitten.com/50/50?image=${item}`} 
 						alt={`item-${item.toString()}`}
 					/>
 				</Button>

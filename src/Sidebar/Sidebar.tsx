@@ -27,8 +27,7 @@ const TabPanel = ({children, index, value}: TabPanelProps) => (
 )
 
 const Sidebar = () => {
-  // starting at 1 because the heading is index 0
-  const [value, setValue] = useState(1);
+  const [value, setValue] = useState(0);
   const [isInitialRender, setIsInitialRender] = useState(true);
 
   useEffect(() => {
@@ -38,19 +37,21 @@ const Sidebar = () => {
   }, [isInitialRender])
   
   return (
-    <Box sx={{ flexGrow: 1, display: 'flex', p: 2 }}>
-      <Tabs
-        orientation='vertical'
-        value={value}
-        onChange={(e: React.SyntheticEvent, index: number) => setValue(index)}
-      >
+    <Box sx={{ display: 'flex' }}>
+      <Box>
         <Typography variant='h6' sx={{ p: 2, pt: 1 }}>Final Fantasy Idle</Typography>
-        <Tab label='Party' />
-        <Tab label='Combat' />
-        <Tab label='Placeholder' />
-      </Tabs>
-      <TabPanel value={value} index={1}>
-        {!isInitialRender && value === 1 && <PartyTab />}
+        <Tabs
+          orientation='vertical'
+          value={value}
+          onChange={(e: React.SyntheticEvent, index: number) => setValue(index)}
+        >
+          <Tab label='Party' />
+          <Tab label='Combat' />
+          <Tab label='Placeholder' />
+        </Tabs>
+      </Box>
+      <TabPanel value={value} index={0}>
+        {!isInitialRender && value === 0 && <PartyTab />}
       </TabPanel>
     </Box>
   );

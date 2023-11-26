@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid';
 
 const EquippedArmour = () => (
 	<Grid container justifyContent='center'>
-		<Grid item spacing={2} sx={{ width: 200 }}>
+		<Grid item sx={{ width: 200 }}>
 			<Grid item xs={12} sx={{ py: 1 }}>
 				<Box component='img' sx={{ width: 50, height: 50 }} />
 			</Grid>
