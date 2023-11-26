@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 
 import EquippedArmour from '../EquippedArmour';
+import Inventory from './Inventory';
 
 const PartyTab = () => {
 	const [partyMemberItems, setPartyMemberItems] = useState(
@@ -48,37 +48,14 @@ const PartyTab = () => {
           </List>
         </Grid>
         <Grid item xs={12} justifyContent='center'>
-          <Typography variant='h6' sx={{py: 3}}>Inventory</Typography>
-					<InventoryRow
-						items={partyMemberItems}
+					<Inventory
 						handleItemChange={handleItemChange}
+						items={partyMemberItems}
 					/>
         </Grid>
       </Grid>
     </Box>
   );
 };
-
-type InventoryRowProps = {
-	items: number[],
-	handleItemChange: (value: number, index: number) => void
-}
-
-const InventoryRow = ({ items, handleItemChange }: InventoryRowProps ) => {
-	return (
-		<Box sx={{ display: 'flex', flexWrap: 'wrap'}}>
-			{items.map((item, index) => (
-				<Button key={`inventory-item-${index}`} onClick={() => handleItemChange(item, index)}>
-					<Box
-						component='img'
-						src={`https://placekitten.com/50/50?image=${item}`} 
-						alt={`item-${item.toString()}`}
-					/>
-				</Button>
-				)
-			)}
-		</Box>
-	);
-}
 
 export default PartyTab;
