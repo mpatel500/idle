@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 import PartyTab from '../PartyTab';
+import CombatTab from '../CombatTab';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -14,9 +15,10 @@ interface TabPanelProps {
 
 const TabPanel = ({children, index, value}: TabPanelProps) => (
   <div
-  role='tabpanel'
-  id={`tabpanel-${index}`}
-  style={{width: '100%'}}
+    hidden={value !== index}
+    role='tabpanel'
+    id={`tabpanel-${index}`}
+    style={{width: '100%'}}
   >
     {value === index && (
       <Box sx={{p: 3}}>
@@ -35,11 +37,13 @@ const Sidebar = () => {
       setIsInitialRender(false);
     }
   }, [isInitialRender])
+
+  console.log(value);
   
   return (
     <Box sx={{ display: 'flex' }}>
       <Box>
-        <Typography variant='h6' sx={{ p: 2, pt: 1 }}>Final Fantasy Idle</Typography>
+        <Typography variant='h6' sx={{ p: 2, pt: 1 }}>FF Idle</Typography>
         <Tabs
           orientation='vertical'
           value={value}
@@ -52,6 +56,9 @@ const Sidebar = () => {
       </Box>
       <TabPanel value={value} index={0}>
         {!isInitialRender && value === 0 && <PartyTab />}
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        {value === 1 && <CombatTab />}
       </TabPanel>
     </Box>
   );
