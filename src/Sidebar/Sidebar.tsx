@@ -37,13 +37,11 @@ const Sidebar = () => {
       setIsInitialRender(false);
     }
   }, [isInitialRender])
-
-  console.log(value);
   
   return (
     <Box sx={{ display: 'flex' }}>
       <Box>
-        <Typography variant='h6' sx={{ p: 2, pt: 1 }}>FF Idle</Typography>
+        <Typography variant='h6' sx={{ p: 2 }}>FF Idle</Typography>
         <Tabs
           orientation='vertical'
           value={value}

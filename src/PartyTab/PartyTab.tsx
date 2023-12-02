@@ -5,15 +5,18 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import useInventoryStore from '../hooks/useInventoryStore';
+import useEquippedItems from '../hooks/useEquippedItems';
 
 import EquippedArmour from '../EquippedArmour';
 import Inventory from './Inventory';
+import { Button } from '@mui/material';
 
 const swapWithinListAndUpdateState = (
 	listOne: any[],
 	indexOne: number,
 	indexTwo: number,
-	setState: React.Dispatch<React.SetStateAction<number[]>>,
+	setState: (newItems: number[]) => void,
 ): void => {
 	const newList = [...listOne];
 	const temp = newList[indexOne];
@@ -27,8 +30,8 @@ const swapBetweenListsAndUpdateState = (
 	indexOne: number,
 	listTwo: any[],
 	indexTwo: number,
-	setState1: React.Dispatch<React.SetStateAction<number[]>>,
-	setState2: React.Dispatch<React.SetStateAction<number[]>>,
+	setState1: (newItems: number[]) => void,
+	setState2: (newItems: number[]) => void,
 ): void => {
 	const temp = listTwo[indexTwo];
 	listTwo[indexTwo] = listOne[indexOne];
@@ -38,16 +41,13 @@ const swapBetweenListsAndUpdateState = (
 }
 
 const PartyTab = () => {
-	const initialEquippedItems = [0, 1, 2, 3, 4, 5];
-	const initialPartyMemberItems = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
-
-	const [equippedItems, setEquippedItems] = useState(initialEquippedItems)
-	const [partyMemberItems, setPartyMemberItems] = useState(initialPartyMemberItems);
-
 	const [selectedItem, setSelectedItem] = useState({
 		itemIndex: -1,
 		listIndex: -1
 	});
+
+  const { items: inventoryItems, add, setNew: setNewInventory } = useInventoryStore((state) => state);
+  const { items: equippedItems, setNew: setNewEquippedItems } = useEquippedItems((state) => state);
 
 	const handleItemChange = (itemIndex: number, listIndex: number) => {
 		if (selectedItem.itemIndex === -1) {
@@ -56,15 +56,15 @@ const PartyTab = () => {
 		else {
 			if (selectedItem.listIndex === listIndex) {
 				if (listIndex === 1) {
-					swapWithinListAndUpdateState(equippedItems, itemIndex, selectedItem.itemIndex, setEquippedItems);
+					swapWithinListAndUpdateState(equippedItems, itemIndex, selectedItem.itemIndex, setNewEquippedItems);
 				} else if (listIndex === 2) {
-					swapWithinListAndUpdateState(partyMemberItems, itemIndex, selectedItem.itemIndex, setPartyMemberItems);
+					swapWithinListAndUpdateState(inventoryItems, itemIndex, selectedItem.itemIndex, setNewInventory);
 				}
 			} else {
         if (listIndex === 1) {
-					swapBetweenListsAndUpdateState(equippedItems, itemIndex, partyMemberItems, selectedItem.itemIndex, setEquippedItems, setPartyMemberItems);
+					swapBetweenListsAndUpdateState(equippedItems, itemIndex, inventoryItems, selectedItem.itemIndex, setNewEquippedItems, setNewInventory);
         } else if (listIndex === 2) {
-					swapBetweenListsAndUpdateState(equippedItems, selectedItem.itemIndex, partyMemberItems, itemIndex, setEquippedItems, setPartyMemberItems);
+					swapBetweenListsAndUpdateState(equippedItems, selectedItem.itemIndex, inventoryItems, itemIndex, setNewEquippedItems, setNewInventory);
 				}
 			}
 			setSelectedItem({itemIndex: -1, listIndex: -1})
@@ -77,6 +77,7 @@ const PartyTab = () => {
         <Grid item xs={4}>
           <Box>
             <Typography variant='h6'>Equipped</Typography>
+						<Button onClick={() => add(2)}>Add 2</Button>
           </Box>
           <EquippedArmour
 						items={equippedItems}
@@ -94,7 +95,7 @@ const PartyTab = () => {
         <Grid item xs={12} justifyContent='center'>
 					<Inventory
 						handleItemChange={handleItemChange}
-						items={partyMemberItems}
+						items={inventoryItems}
 					/>
         </Grid>
       </Grid>
